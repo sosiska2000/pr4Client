@@ -1,3 +1,5 @@
 <Solution>
-  <Project Path="Common/Common.csproj" />
+  <Project Path="Common/Common.csproj" Id="cedb90b9-07c8-4377-b25d-775b576c48ea" />
+  <Project Path="FTPClient/FTPClient.csproj" Id="2179277e-b881-4cf1-814b-3a9c3497fd8d" />
+  <Project Path="Server/Server.csproj" Id="c340e7fa-0417-40a8-a046-655e8d825969" />
 </Solution>

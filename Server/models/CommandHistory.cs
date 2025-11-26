@@ -13,7 +13,7 @@ namespace Server.Models
 
         [Required]
         [StringLength(20)]
-        public string CommandType { get; set; } // "connect", "cd", "get", "set"
+        public string CommandType { get; set; }
 
         public string CommandText { get; set; }
 
@@ -23,7 +23,6 @@ namespace Server.Models
 
         public bool Success { get; set; }
 
-        // Навигационное свойство
         public virtual User User { get; set; }
     }
 }

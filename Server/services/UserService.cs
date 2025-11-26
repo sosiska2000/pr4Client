@@ -5,13 +5,7 @@ using Server.Models;
 
 namespace Server.Services
 {
-    public interface IUserService
-    {
-        User Authenticate(string login, string password);
-        void LogCommand(int userId, string commandType, string commandText, string parameters, bool success);
-    }
-
-    public class UserService : IUserService
+    public class UserService
     {
         private readonly AppDbContext _context;
 
@@ -27,8 +21,7 @@ namespace Server.Services
             if (user == null)
                 return null;
 
-            // Простая проверка пароля (в реальном приложении используйте хеширование!)
-            if (user.PasswordHash == password) // Замените на хеширование!
+            if (user.PasswordHash == password)
             {
                 user.LastLogin = DateTime.UtcNow;
                 _context.SaveChanges();
@@ -52,6 +45,20 @@ namespace Server.Services
 
             _context.CommandHistory.Add(commandLog);
             _context.SaveChanges();
+        }
+
+        public void InitializeDatabase(string ftpUserPath)
+        {
+       
+            _context.Database.EnsureCreated();
+
+
+            if (!_context.Users.Any())
+            {
+                var user = new User("skomor1n", "Asdfgl23", ftpUserPath);
+                _context.Users.Add(user);
+                _context.SaveChanges();
+            }
         }
     }
 }

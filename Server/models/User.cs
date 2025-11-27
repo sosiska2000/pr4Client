@@ -1,41 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-
-namespace Server.Models
+﻿namespace Server.Models
 {
     public class User
     {
-        [Key]
-        public int Id { get; set; }
-
-        [Required]
-        [StringLength(50)]
-        public string Login { get; set; }
-
-        [Required]
-        [StringLength(255)]
-        public string PasswordHash { get; set; }
-
-        [Required]
-        public string BaseDirectory { get; set; }
-
+        public int id { get; set; }
+        public string login { get; set; }
+        public string password { get; set; }
+        public string src { get; set; }
         public string temp_src { get; set; }
 
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-
-        public DateTime? LastLogin { get; set; }
-
-        public virtual ICollection<CommandHistory> CommandHistory { get; set; }
-
-        public User() { }
-
-        public User(string login, string passwordHash, string baseDirectory)
+        public User(int id, string login, string password, string src)
         {
-            Login = login;
-            PasswordHash = passwordHash;
-            BaseDirectory = baseDirectory;
-            temp_src = baseDirectory;
+            this.id = id;
+            this.login = login;
+            this.password = password;
+            this.src = src;
+            this.temp_src = src;
         }
     }
 }

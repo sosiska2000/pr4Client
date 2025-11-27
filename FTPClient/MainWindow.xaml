@@ -3,63 +3,103 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="FTP Client" Height="600" Width="800"
         WindowStartupLocation="CenterScreen">
-    <Grid>
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#007acc"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#005a9e"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#ddd"/>
+            <Setter Property="Background" Value="White"/>
+        </Style>
+
+        <Style TargetType="PasswordBox">
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#ddd"/>
+            <Setter Property="Background" Value="White"/>
+        </Style>
+
+        <Style TargetType="ListView">
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#ddd"/>
+            <Setter Property="Background" Value="White"/>
+        </Style>
+
+        <Style TargetType="TreeView">
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#ddd"/>
+            <Setter Property="Background" Value="White"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Панель подключения -->
-        <GroupBox Grid.Row="0" Header="Подключение" Margin="5">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="100"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="60"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="100"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="100"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
+     
+        <Border Grid.Row="0" Background="White" BorderBrush="#ddd" BorderThickness="1" CornerRadius="4" Padding="15" Margin="0,0,0,10">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Сервер:" VerticalAlignment="Center" Margin="0,0,5,0" FontWeight="SemiBold"/>
+                <TextBox x:Name="txtIP" Text="127.0.0.1" Width="100"/>
 
-                <TextBlock Grid.Column="0" Text="IP:" VerticalAlignment="Center" Margin="5,0"/>
-                <TextBox x:Name="txtIP" Grid.Column="1" Text="127.0.0.1" Margin="5"/>
-                <TextBlock Grid.Column="2" Text="Порт:" VerticalAlignment="Center" Margin="5,0"/>
-                <TextBox x:Name="txtPort" Grid.Column="3" Text="8080" Margin="5"/>
-                <TextBlock Grid.Column="4" Text="Логин:" VerticalAlignment="Center" Margin="5,0"/>
-                <TextBox x:Name="txtLogin" Grid.Column="5" Text="skomor1n" Margin="5"/>
-                <TextBlock Grid.Column="6" Text="Пароль:" VerticalAlignment="Center" Margin="5,0"/>
-                <PasswordBox x:Name="txtPassword" Grid.Column="7" Password="Asdfgl23" Margin="5"/>
-                <Button x:Name="btnConnect" Grid.Column="8" Content="Подключиться" Click="BtnConnect_Click" Margin="5" Width="100"/>
-                <Button x:Name="btnDisconnect" Grid.Column="9" Content="Отключиться" Click="BtnDisconnect_Click" Margin="5" Width="80" IsEnabled="False"/>
-            </Grid>
-        </GroupBox>
+                <TextBlock Text="Порт:" VerticalAlignment="Center" Margin="15,0,5,0" FontWeight="SemiBold"/>
+                <TextBox x:Name="txtPort" Text="8080" Width="60"/>
+
+                <TextBlock Text="Логин:" VerticalAlignment="Center" Margin="15,0,5,0" FontWeight="SemiBold"/>
+                <TextBox x:Name="txtLogin" Text="skomor1n" Width="100"/>
+
+                <TextBlock Text="Пароль:" VerticalAlignment="Center" Margin="15,0,5,0" FontWeight="SemiBold"/>
+                <PasswordBox x:Name="txtPassword" Password="Asdfgl23" Width="100"/>
+
+                <Button x:Name="btnConnect" Content="Подключиться" Click="BtnConnect_Click" Margin="15,0,5,0" Width="100"/>
+                <Button x:Name="btnDisconnect" Content="Отключиться" Click="BtnDisconnect_Click" Width="80" IsEnabled="False"
+                       Background="#6c757d"/>
+            </StackPanel>
+        </Border>
 
         <!-- Основная область -->
-        <Grid Grid.Row="1" Margin="5">
+        <Grid Grid.Row="1" Margin="0,5,0,5">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="300"/>
-                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="250"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Дерево директорий -->
-            <GroupBox Grid.Column="0" Header="Директории">
-                <TreeView x:Name="treeDirectories" 
-                         MouseDoubleClick="TreeDirectories_MouseDoubleClick"
-                         SelectedItemChanged="TreeDirectories_SelectedItemChanged">
-                </TreeView>
-            </GroupBox>
+            <!-- Панель навигации -->
+            <Border Grid.Column="0" Background="White" BorderBrush="#ddd" BorderThickness="1" CornerRadius="4" Margin="0,0,5,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
-            <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch"/>
+                    <TextBlock Text="Папки" FontWeight="Bold" Padding="10,8" Background="#f8f9fa"/>
+
+                    <TreeView x:Name="treeDirectories" 
+                             Grid.Row="1"
+                             MouseDoubleClick="TreeDirectories_MouseDoubleClick"
+                             SelectedItemChanged="TreeDirectories_SelectedItemChanged"
+                             Padding="5"/>
+                </Grid>
+            </Border>
 
             <!-- Список файлов -->
-            <GroupBox Grid.Column="2" Header="Файлы">
+            <Border Grid.Column="1" Background="White" BorderBrush="#ddd" BorderThickness="1" CornerRadius="4" Margin="5,0,0,0">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -67,8 +107,12 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock x:Name="txtCurrentPath" Grid.Row="0" Margin="5" FontWeight="Bold" Text="Текущий путь: /"/>
+                    <!-- Текущий путь -->
+                    <Border Grid.Row="0" Background="#e9ecef" Padding="10">
+                        <TextBlock x:Name="txtCurrentPath" FontWeight="SemiBold" Text="Текущий путь: /"/>
+                    </Border>
 
+                    <!-- Список файлов -->
                     <ListView x:Name="listFiles" Grid.Row="1" 
                              MouseDoubleClick="ListFiles_MouseDoubleClick">
                         <ListView.View>
@@ -80,27 +124,39 @@
                         </ListView.View>
                     </ListView>
 
-                    <!-- Панель управления файлами -->
-                    <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="5">
-                        <Button x:Name="btnUpload" Content="Загрузить файл" Click="BtnUpload_Click" Margin="0,0,5,0"/>
-                        <Button x:Name="btnDownload" Content="Скачать" Click="BtnDownload_Click" Margin="0,0,5,0"/>
-                        <Button x:Name="btnRefresh" Content="Обновить" Click="BtnRefresh_Click"/>
-                    </StackPanel>
+                    <!-- Панель действий -->
+                    <Border Grid.Row="2" Background="#f8f9fa" Padding="10">
+                        <StackPanel Orientation="Horizontal">
+                            <Button x:Name="btnUpload" Content="📤 Загрузить" Click="BtnUpload_Click" 
+                                   Background="#28a745" Width="100"/>
+                            <Button x:Name="btnDownload" Content="📥 Скачать" Click="BtnDownload_Click" 
+                                   Width="100"/>
+                            <Button x:Name="btnRefresh" Content="🔄 Обновить" Click="BtnRefresh_Click" 
+                                   Background="#17a2b8" Width="100"/>
+                        </StackPanel>
+                    </Border>
                 </Grid>
-            </GroupBox>
+            </Border>
         </Grid>
 
         <!-- Статус бар -->
-        <StatusBar Grid.Row="2">
-            <StatusBarItem>
-                <TextBlock x:Name="txtStatus" Text="Не подключено"/>
-            </StatusBarItem>
-            <StatusBarItem>
-                <ProgressBar x:Name="progressBar" Width="100" Height="16" IsIndeterminate="False"/>
-            </StatusBarItem>
-            <StatusBarItem>
-                <TextBlock x:Name="txtUserInfo" Text="Пользователь: Не авторизован"/>
-            </StatusBarItem>
-        </StatusBar>
+        <Border Grid.Row="2" Background="#343a40" CornerRadius="0,0,4,4">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock x:Name="txtStatus" Text="Не подключено" Foreground="White" 
+                          VerticalAlignment="Center" Padding="10,5"/>
+
+                <ProgressBar x:Name="progressBar" Grid.Column="1" Width="120" Height="16" 
+                            IsIndeterminate="False" Margin="5" VerticalAlignment="Center"/>
+
+                <TextBlock x:Name="txtUserInfo" Grid.Column="2" Text="Пользователь: Не авторизован" 
+                          Foreground="White" VerticalAlignment="Center" Padding="10,5"/>
+            </Grid>
+        </Border>
     </Grid>
 </Window>
